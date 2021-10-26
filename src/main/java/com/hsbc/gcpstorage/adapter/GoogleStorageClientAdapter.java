@@ -20,9 +20,7 @@ public class GoogleStorageClientAdapter {
     Storage storage;
     String bucketName;
 
-//    public GoogleStorageClientAdapter(@Autowired Storage storage, @Value("${bucket:my-test-0123459}") String bucketName) {
     public GoogleStorageClientAdapter(@Autowired Storage storage, @Value("${bucket}") String bucketName) {
-//    public GoogleStorageClientAdapter(@Autowired Storage storage,  String bucketName) {
         this.storage = storage;
         this.bucketName = bucketName;
     }
