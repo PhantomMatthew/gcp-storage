@@ -27,12 +27,6 @@ public class FileController {
     @Autowired
     GoogleStorageClientAdapter googleStorageClientAdapter;
 
-
-    @GetMapping("*/")
-    public String index() throws Exception {
-        return "New Files Controller";
-    }
-
     @ApiOperation(value = "upload file", notes = "upload file")
     @PostMapping(path = "*/upload", consumes = {MediaType.MULTIPART_FORM_DATA_VALUE})
     public Boolean uploadFile(@RequestPart(value = "file", required = true) MultipartFile files)  {

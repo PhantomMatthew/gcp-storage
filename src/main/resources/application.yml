@@ -1,0 +1,18 @@
+bucket: spring-bucket-jiabeiyuan
+path_to_json_key: D:\\SourceCode\\gcp-storage\\fresh-metrics-328615-0004f9c95952.json
+
+server:
+  port: 18080
+
+logging:
+#  config: logback.xml
+  level:
+    org.springframework: INFO
+    com.hsbc: INFO
+
+spring:
+  servlet:
+    multipart:
+      enabled: true
+      max-file-size: 100MB
+      max-request-size: 200MB

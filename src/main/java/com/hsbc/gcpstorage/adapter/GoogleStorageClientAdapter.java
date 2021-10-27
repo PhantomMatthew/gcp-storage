@@ -7,13 +7,18 @@ import com.google.api.services.storage.model.StorageObject;
 import com.google.cloud.storage.Blob;
 import com.google.cloud.storage.BlobId;
 import com.google.cloud.storage.StorageOptions;
+import com.hsbc.gcpstorage.utils.FileTypeChecker;
+import org.checkerframework.checker.builder.qual.ReturnsReceiver;
+import org.springframework.util.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.*;
+import java.io.File;
 import java.nio.file.Paths;
+import java.util.UUID;
 
 @Component
 public class GoogleStorageClientAdapter {
@@ -27,9 +32,17 @@ public class GoogleStorageClientAdapter {
 
     public Boolean upload(MultipartFile file, String prefixName) throws IOException {
         StorageObject object = new StorageObject();
-        object.setName(file.getOriginalFilename());
+
+        String fileExtention = StringUtils.getFilenameExtension(file.getOriginalFilename());
+
+        String newFileName =  UUID.randomUUID() + "." + fileExtention;
+        String contentType = FileTypeChecker.identifyFileContentType(newFileName);
+
+        object.setName(newFileName);
+        object.setContentType(contentType);
+
         InputStream targetStream = new ByteArrayInputStream(file.getBytes());
-        storage.objects().insert(bucketName, object, new AbstractInputStreamContent(file.getOriginalFilename()) {
+        storage.objects().insert(bucketName, object, new AbstractInputStreamContent(newFileName) {
             @Override
             public long getLength() throws IOException {
                 return file.getSize();
@@ -43,6 +56,10 @@ public class GoogleStorageClientAdapter {
             @Override
             public InputStream getInputStream() throws IOException {
                 return targetStream;
+            }
+            @Override
+            public String getType() {
+                return contentType;
             }
         }).execute();
         return true;
@@ -61,6 +78,7 @@ public class GoogleStorageClientAdapter {
         object.set("file", file);
         return object;
     }
+
 
 //    public static void downloadObjects(String projectid, String bucketName, String objectName) {
 //        Storage storage = StorageOptions.newBuilder().setProjectId().build().getService();
