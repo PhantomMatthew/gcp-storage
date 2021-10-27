@@ -4,7 +4,7 @@ import com.google.api.services.storage.model.StorageObject;
 import com.google.common.io.Files;
 import com.test.gcpstorage.response.ResponseHandler;
 import com.test.gcpstorage.service.GoogleStorageClientAdapter;
-import com.test.gcpstorage.entities.StorageFileInfo;
+import com.test.gcpstorage.model.StorageFileInfo;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;

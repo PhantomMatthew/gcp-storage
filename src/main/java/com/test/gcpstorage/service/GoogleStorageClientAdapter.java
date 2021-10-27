@@ -4,7 +4,7 @@ import com.google.api.client.http.AbstractInputStreamContent;
 import com.google.api.client.http.GenericUrl;
 import com.google.api.services.storage.Storage;
 import com.google.api.services.storage.model.StorageObject;
-import com.test.gcpstorage.entities.StorageFileInfo;
+import com.test.gcpstorage.model.StorageFileInfo;
 import com.test.gcpstorage.utils.FileTypeChecker;
 import org.springframework.util.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
