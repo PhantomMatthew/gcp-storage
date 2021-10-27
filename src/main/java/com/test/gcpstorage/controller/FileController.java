@@ -2,12 +2,14 @@ package com.test.gcpstorage.controller;
 
 import com.google.api.services.storage.model.StorageObject;
 import com.google.common.io.Files;
+import com.test.gcpstorage.response.ResponseHandler;
 import com.test.gcpstorage.service.GoogleStorageClientAdapter;
 import com.test.gcpstorage.entities.StorageFileInfo;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.ByteArrayResource;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -26,23 +28,19 @@ public class FileController {
 
     @ApiOperation(value = "upload file", notes = "upload file")
     @PostMapping(path = "*/upload", consumes = {MediaType.MULTIPART_FORM_DATA_VALUE})
-//    public ResponseEntity<StorageFileInfo> uploadFile(@RequestPart(value = "file", required = true) MultipartFile files)  {
-    public Boolean uploadFile(@RequestPart(value = "file", required = true) MultipartFile files)  {
-        Boolean result = false;
+    public Object uploadFile(@RequestPart(value = "file", required = true) MultipartFile files)  {
+        StorageFileInfo result = null;
         try {
             result = googleStorageClientAdapter.upload(files, "prefix");
 
-            if(result) {
-                StorageFileInfo fileInfo = new StorageFileInfo();
-                fileInfo.name = files.getOriginalFilename();
-                return result;
-//                return ResponseHandler.generateResponse("Upload Successfully", HttpStatus.BAD_REQUEST, fileInfo);
+            if(result != null) {
+                return ResponseHandler.generateResponse("Upload Successfully", HttpStatus.OK, result);
             }
         } catch (IOException e) {
             e.printStackTrace();
+            return ResponseHandler.generateResponse(e.getMessage(), HttpStatus.BAD_REQUEST, null);
         }
-        return result;
-//        return ResponseHandler.generateResponse("Upload Failed", HttpStatus.BAD_REQUEST, result);
+        return ResponseHandler.generateResponse("Upload Failed", HttpStatus.BAD_REQUEST, null);
     }
 
     @ApiOperation(value = "download a file", notes = "download a file")

@@ -4,6 +4,7 @@ import com.google.api.client.http.AbstractInputStreamContent;
 import com.google.api.client.http.GenericUrl;
 import com.google.api.services.storage.Storage;
 import com.google.api.services.storage.model.StorageObject;
+import com.test.gcpstorage.entities.StorageFileInfo;
 import com.test.gcpstorage.utils.FileTypeChecker;
 import org.springframework.util.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,7 +26,8 @@ public class GoogleStorageClientAdapter {
         this.bucketName = bucketName;
     }
 
-    public Boolean upload(MultipartFile file, String prefixName) throws IOException {
+    public StorageFileInfo upload(MultipartFile file, String prefixName) throws IOException {
+        StorageFileInfo storageFileInfo = new StorageFileInfo();
         StorageObject object = new StorageObject();
 
         String fileExtention = StringUtils.getFilenameExtension(file.getOriginalFilename());
@@ -57,7 +59,9 @@ public class GoogleStorageClientAdapter {
                 return contentType;
             }
         }).execute();
-        return true;
+
+        storageFileInfo.name = newFileName;
+        return storageFileInfo;
     }
 
 
