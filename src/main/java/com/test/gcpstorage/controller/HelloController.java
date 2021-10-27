@@ -1,4 +1,4 @@
-package com.hsbc.gcpstorage.controller;
+package com.test.gcpstorage.controller;
 
 import com.google.auth.oauth2.GoogleCredentials;
 import com.google.cloud.ReadChannel;

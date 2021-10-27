@@ -8,7 +8,7 @@ logging:
 #  config: logback.xml
   level:
     org.springframework: INFO
-    com.hsbc: INFO
+    com.test: INFO
 
 spring:
   servlet:
