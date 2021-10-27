@@ -19,42 +19,42 @@ import java.io.IOException;
 public class HelloController {
     @ApiOperation(value = "Index", notes = "Index")
     @GetMapping("/")
-    public String index() {
-        return "Hello from File Upload";
+    public String versionInfo() {
+        return "Hello from File Upload, version: 0.0.1";
     }
 
-    @ApiOperation(value = "list files", notes = "list files")
-    @GetMapping("/files")
-    public String getFileLists()
-    {
-        String PROJECT_ID = "fresh-metrics-328615";
-        String PATH_TO_JSON_KEY = "D:\\SourceCode\\gcp-storage\\lucky-nature-286904-e4cf2bdffe2d.json";
-        String BUCKET_NAME = "my-test-0123459";
-        String OBJECT_NAME = "1.txt";
-
-        String fileContent = "";
-
-        try {
-            StorageOptions options = StorageOptions.newBuilder()
-                    .setProjectId(PROJECT_ID)
-                    .setCredentials(GoogleCredentials.fromStream(
-                            new FileInputStream(PATH_TO_JSON_KEY))).build();
-
-            Storage storage = options.getService();
-            Blob blob = storage.get(BUCKET_NAME, OBJECT_NAME);
-            ReadChannel r = blob.reader();
-
-            fileContent = new String(blob.getContent());
-
-            System.out.println(fileContent);
-        }
-        catch (FileNotFoundException ex)
-        {
-            // insert code to run when exception occurs
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-
-        return fileContent;
-    }
+//    @ApiOperation(value = "list files", notes = "list files")
+//    @GetMapping("/files")
+//    public String getFileLists()
+//    {
+//        String PROJECT_ID = "fresh-metrics-328615";
+//        String PATH_TO_JSON_KEY = "D:\\SourceCode\\gcp-storage\\lucky-nature-286904-e4cf2bdffe2d.json";
+//        String BUCKET_NAME = "my-test-0123459";
+//        String OBJECT_NAME = "1.txt";
+//
+//        String fileContent = "";
+//
+//        try {
+//            StorageOptions options = StorageOptions.newBuilder()
+//                    .setProjectId(PROJECT_ID)
+//                    .setCredentials(GoogleCredentials.fromStream(
+//                            new FileInputStream(PATH_TO_JSON_KEY))).build();
+//
+//            Storage storage = options.getService();
+//            Blob blob = storage.get(BUCKET_NAME, OBJECT_NAME);
+//            ReadChannel r = blob.reader();
+//
+//            fileContent = new String(blob.getContent());
+//
+//            System.out.println(fileContent);
+//        }
+//        catch (FileNotFoundException ex)
+//        {
+//            // insert code to run when exception occurs
+//        } catch (IOException e) {
+//            e.printStackTrace();
+//        }
+//
+//        return fileContent;
+//    }
 }
