@@ -20,7 +20,7 @@ public class SwaggerConfiguration {
                 .apiInfo(apiInfo()).enable(true)
                 .select()
                 //apis： 添加swagger接口提取范围
-                .apis(RequestHandlerSelectors.basePackage("com.example"))
+                .apis(RequestHandlerSelectors.basePackage("com.test"))
                 //.apis(RequestHandlerSelectors.withMethodAnnotation(ApiOperation.class))
                 .paths(PathSelectors.any())
                 .build();
