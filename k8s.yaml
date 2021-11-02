@@ -22,10 +22,10 @@ spec:
         resources:
           limits:
             cpu: 250m
-            memory: 200Mi
+            memory: 500Mi
           requests:
             cpu: 250m
-            memory: 200Mi
+            memory: 500Mi
         env:
           - name: GOOGLE_APPLICATION_CREDENTIALS
             value: "./credentials.json"
@@ -39,12 +39,13 @@ metadata:
   name: demo
   namespace: default
 spec:
-#  type: ClusterIP
-  type: LoadBalancer
+  type: NodePort
+#  type: LoadBalancer
   selector:
     app: demo
   ports:
-    - port: 80
+    - protocol: TCP
+      port: 80
       targetPort: 8080
 ---
 apiVersion: networking.k8s.io/v1

@@ -3,3 +3,7 @@
 /*.txt
 /logs/
 /.idea/
+/.settings/
+/.classpath
+/.factorypath
+/.project
