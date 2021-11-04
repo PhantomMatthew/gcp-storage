@@ -20,7 +20,7 @@ public class HelloController {
     @ApiOperation(value = "Index", notes = "Index")
     @GetMapping("/")
     public String versionInfo() {
-        return "Hello from File Upload, version: 0.0.3";
+        return "Hello from File Upload, version: 0.0.4";
     }
 
 //    @ApiOperation(value = "list files", notes = "list files")

@@ -38,3 +38,8 @@ gcloud secrets create gcstest --data-file=./credentials.json
 
 gcloud secrects list
 ```
+
+# Restart deployment
+```bash
+kubectl rollout restart deployment demo
+```
