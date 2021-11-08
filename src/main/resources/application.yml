@@ -1,5 +1,6 @@
-bucket: spring-bucket-jiabeiyuan
-path_to_json_key: ./credentials.json
+projectid: fresh-metrics-328615
+bucketname: spring-bucket-jiabeiyuan
+#path_to_json_key: ./credentials.json
 
 server:
   port: 8080
@@ -16,3 +17,6 @@ spring:
       enabled: true
       max-file-size: 500MB
       max-request-size: 500MB
+
+
+#keyUri : ${sm://gtest}

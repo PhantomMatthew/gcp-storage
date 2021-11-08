@@ -7,6 +7,7 @@ import com.google.cloud.storage.Storage;
 import com.google.cloud.storage.StorageOptions;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -17,10 +18,13 @@ import java.io.IOException;
 @Api(tags = "Home")
 @RestController
 public class HelloController {
+//    @Value("${keyUri}")
+//    String testUri;
+
     @ApiOperation(value = "Index", notes = "Index")
-    @GetMapping("/")
+    @GetMapping("/hi")
     public String versionInfo() {
-        return "Hello from File Upload, version: 0.0.4";
+        return "Hello from File Upload, version: 0.0.6";
     }
 
 //    @ApiOperation(value = "list files", notes = "list files")

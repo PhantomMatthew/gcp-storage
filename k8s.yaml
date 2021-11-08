@@ -13,8 +13,7 @@ spec:
       labels:
         app: demo
     spec:
-#      imagePullSecrets:
-#        - name: regcred
+      serviceAccountName: gcstestk
       containers:
       - name: demo
         imagePullPolicy: Always
@@ -26,9 +25,6 @@ spec:
           requests:
             cpu: 250m
             memory: 500Mi
-        env:
-          - name: GOOGLE_APPLICATION_CREDENTIALS
-            value: "./credentials.json"
         ports:
         - containerPort: 8080
       restartPolicy: Always
@@ -53,7 +49,7 @@ kind: Ingress
 metadata:
   name: demo-ingress
   namespace: default
-  annotations:
+#  annotations:
 #    nginx.ingress.kubernetes.io/use-regex: "true"
 #    nginx.ingress.kubernetes.io/ssl-redirect: "false"
 #    nginx.ingress.kubernetes.io/proxy-read-timeout: "3600"
