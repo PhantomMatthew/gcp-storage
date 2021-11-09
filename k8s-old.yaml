@@ -1,0 +1,80 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: demo
+  namespace: default
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: demo
+  template:
+    metadata:
+      labels:
+        app: demo
+    spec:
+#      imagePullSecrets:
+#        - name: regcred
+      containers:
+      - name: demo
+        imagePullPolicy: Always
+        image: us.gcr.io/fresh-metrics-328615/demo:corretto11
+        resources:
+          limits:
+            cpu: 250m
+            memory: 500Mi
+          requests:
+            cpu: 250m
+            memory: 500Mi
+        env:
+          - name: GOOGLE_APPLICATION_CREDENTIALS
+            value: sm://gcstest/credentials.json
+#        volumeMounts:
+#        - name: gcstest
+#          mountPath: "/key"
+#          readOnly: true
+        ports:
+        - containerPort: 8080
+      restartPolicy: Always
+#      volumes:
+#      - name: gcstest
+#        secret:
+#          secretName: gcstest
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: demo
+  namespace: default
+spec:
+  type: NodePort
+#  type: LoadBalancer
+  selector:
+    app: demo
+  ports:
+    - protocol: TCP
+      port: 80
+      targetPort: 8080
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: demo-ingress
+  namespace: default
+  annotations:
+#    nginx.ingress.kubernetes.io/use-regex: "true"
+#    nginx.ingress.kubernetes.io/ssl-redirect: "false"
+#    nginx.ingress.kubernetes.io/proxy-read-timeout: "3600"
+#    nginx.ingress.kubernetes.io/rewrite-target: /
+#    kubernetes.io/ingress.class: "nginx"
+spec:
+  rules:
+    - http:
+        paths:
+        - path: /*
+          pathType: ImplementationSpecific
+          backend:
+            service:
+              name: demo
+              port:
+                number: 80
